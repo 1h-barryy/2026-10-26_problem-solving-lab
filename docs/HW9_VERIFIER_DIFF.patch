@@ -1,0 +1,9 @@
+diff --git a/problem_solving_lab/concepts.py b/problem_solving_lab/concepts.py
+index 950ff3a..2249fd1 100644
+--- a/problem_solving_lab/concepts.py
++++ b/problem_solving_lab/concepts.py
+@@ -62,3 +62,3 @@ def category_name(code: str) -> str:
+ def match_label(distance: float) -> str:
+-    if distance <= STRONG_BELOW:
++    if distance < STRONG_BELOW:
+         return "strong"

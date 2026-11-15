@@ -60,7 +60,7 @@ def category_name(code: str) -> str:
 
 
 def match_label(distance: float) -> str:
-    if distance <= STRONG_BELOW:
+    if distance < STRONG_BELOW:
         return "strong"
     if distance <= WEAK_ABOVE:
         return "moderate"
