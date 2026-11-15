@@ -2,8 +2,8 @@
 
 This log records user prompts visible verbatim in the current conversation.
 The first two concern preparation of this repository for HW9; the third requests
-the final documentation. They are not evidence of prompts used to implement
-tests, perform mutations, configure CI, or run the separate verifier.
+the final documentation. Entries 4–7 (Claude Code) cover implementing the tests,
+mutation testing, CI, and preparing the verifier experiment.
 
 Tool for these three entries: **Codex** (this conversation).
 Exact model/version for each entry: **[MISSING — supply the model shown in the
@@ -241,9 +241,9 @@ now there is another agent working so do not change any more of the structure fi
 
 - **[MISSING: fake-test prompts or records, if any, and their tool/model.]** No
   explicit fake-test documentation was found in the inspected repository files.
-- **[PENDING: separate verifier's original prompt, tool/model, and completed
-  response.]** The user says verification is ongoing. No incomplete verifier
-  results are represented here as completed evidence.
+- **Verifier prompt: recorded.** The separate verifier's original prompt and
+  selected verbatim responses are in `docs/HW9_VERIFIER_EVIDENCE.md`. Its exact
+  tool/model is **[MISSING — not recorded in that evidence file.]**
 
 Replace these placeholders only with original, verifiable records. Do not infer
 prompt wording, model names, or completion from source code or commit messages.

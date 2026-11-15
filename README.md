@@ -145,7 +145,10 @@ root, not the package directory or the shell's working directory.
 | `.streamlit/config.toml` | Local server settings and UI theme. |
 | `requirements.txt`, `.gitignore` | Pinned application dependencies and exclusions for local artifacts. |
 | `docs/PROJECT_NOTES.md`, `docs/prompt_log.md` | Historical Phase 1 planning notes and development prompts, preserved as written; see this README for current paths and commands. |
-| `tests/` | Reserved for manually transferred HW9 tests; currently contains only `.gitkeep`. |
+| `tests/` | Pytest unit tests for `concepts.py` and their dependency file; see `tests/README.md`. |
+| `.github/workflows/tests.yml` | GitHub Actions: runs `tests/` with Python 3.13 on every push and pull request. |
+| `TESTING.md`, `prompt_log.md` | HW9 testing report and HW9 prompt log. |
+| `docs/HW9_MUTATION_EVIDENCE.md`, `docs/HW9_VERIFIER_EVIDENCE.md`, `docs/HW9_VERIFIER_DIFF.patch` | Mutation-testing and AI verifier evidence. |
 
 Data flows from arXiv through `fetch_arxiv.py` into `data/raw/arxiv/` (cached feeds)
 and `data/processed/arxiv_papers.jsonl` (deduplicated records). `ingest.py` reads
@@ -178,9 +181,19 @@ New Python code should import from `problem_solving_lab`, for example
 aliases the same module, including private helpers, so existing HW9 imports such
 as `import concepts` continue to work when the repository root is on `sys.path`.
 Other old core imports (`card`, `retrieval`, `lab_common`) must use the package
-prefix. When HW9 tests are transferred, run them from the repository root using
-`python -m pytest` in an environment with pytest installed. No HW9 tests or test
-dependencies are included yet.
+prefix.
+
+### Running the Tests
+
+The unit tests need only pytest, not the full app dependencies or a database:
+
+```powershell
+py -m pip install -r tests/requirements-dev.txt
+py -m pytest -q tests/
+```
+
+Pass `tests/` explicitly so `scripts/smoke_test.py` is not collected. See
+`TESTING.md` for the testing report.
 
 ## 7. Limitations and Future Work
 
@@ -197,3 +210,4 @@ I used ChatGPT for brainstorming and refining the project idea, Claude.ai for ad
 After completing the CLI, I also used Claude Code to develop a simple Streamlit interface.
 
 The main development prompts are documented separately in `docs/prompt_log.md`.
+Prompts for the HW9 testing work are in `prompt_log.md`.
