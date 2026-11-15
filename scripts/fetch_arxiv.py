@@ -7,8 +7,8 @@ arXiv ID with the version suffix removed; records with empty abstracts are
 skipped. Any network or API error aborts the run without writing output.
 
 Usage:
-    python fetch_arxiv.py            # use cached responses where present
-    python fetch_arxiv.py --refresh  # re-download every query
+    python -m scripts.fetch_arxiv            # use cached responses where present
+    python -m scripts.fetch_arxiv --refresh  # re-download every query
 """
 
 import argparse
@@ -22,7 +22,7 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 
-from lab_common import PAPERS_JSONL, RAW_DIR, clean, utf8_stdout
+from problem_solving_lab.lab_common import PAPERS_JSONL, RAW_DIR, clean, utf8_stdout
 
 API_URL = "https://export.arxiv.org/api/query"
 RESULTS_PER_QUERY = 50

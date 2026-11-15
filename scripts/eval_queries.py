@@ -5,7 +5,7 @@ category, title, and non-stopword tokens shared by query and document), then
 the distribution of top-10 distances to help pick a cutoff later.
 
 Usage:
-    python eval_queries.py
+    python -m scripts.eval_queries
 """
 
 import re
@@ -14,7 +14,7 @@ import sys
 
 import chromadb
 
-from lab_common import DB_DIR, PAPERS_COLLECTION, embedding_function, utf8_stdout
+from problem_solving_lab.lab_common import DB_DIR, PAPERS_COLLECTION, embedding_function, utf8_stdout
 
 TOP_K = 10
 

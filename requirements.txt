@@ -1,3 +1,4 @@
-# Python 3.13. The arXiv scripts use only the standard library.
+# Python 3.13. scripts.preview_arxiv uses only the standard library;
+# scripts.fetch_arxiv imports problem_solving_lab.lab_common, which depends on ChromaDB.
 chromadb==1.5.9
 streamlit==1.66.1

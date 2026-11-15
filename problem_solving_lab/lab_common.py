@@ -6,7 +6,7 @@ from pathlib import Path
 
 from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 DB_DIR = ROOT / "data" / "chroma"
 RAW_DIR = ROOT / "data" / "raw" / "arxiv"
 PAPERS_JSONL = ROOT / "data" / "processed" / "arxiv_papers.jsonl"

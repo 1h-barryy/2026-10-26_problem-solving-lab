@@ -7,8 +7,8 @@ arXiv API terms ask for no more than one request every 3 seconds; this script
 makes exactly one request per run.
 
 Usage:
-    python preview_arxiv.py
-    python preview_arxiv.py --query 'all:"collective behavior"' --max-results 3
+    python -m scripts.preview_arxiv
+    python -m scripts.preview_arxiv --query 'all:"collective behavior"' --max-results 3
 """
 
 import argparse

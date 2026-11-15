@@ -10,10 +10,10 @@ import re
 import sys
 from datetime import datetime
 
-from card import build_card, render_markdown
-from concepts import document_frequencies
-from lab_common import ROOT, utf8_stdout
-import retrieval
+from problem_solving_lab.card import build_card, render_markdown
+from problem_solving_lab.concepts import document_frequencies
+from problem_solving_lab.lab_common import ROOT, utf8_stdout
+from problem_solving_lab import retrieval
 
 CARDS_DIR = ROOT / "cards"
 TOP_K = 15

@@ -6,7 +6,7 @@ embedding model's 256-token input limit (those are silently truncated by the
 model; this phase does not chunk).
 
 Usage:
-    python ingest.py
+    python -m scripts.ingest
 """
 
 import json
@@ -16,7 +16,7 @@ from pathlib import Path
 import chromadb
 from tokenizers import Tokenizer
 
-from lab_common import (COLLECTION_CONFIG, DB_DIR, MODEL_MAX_TOKENS, PAPERS_COLLECTION,
+from problem_solving_lab.lab_common import (COLLECTION_CONFIG, DB_DIR, MODEL_MAX_TOKENS, PAPERS_COLLECTION,
                         PAPERS_JSONL, clean, embedding_function, utf8_stdout)
 
 BATCH_SIZE = 64
@@ -67,7 +67,7 @@ def report_token_lengths(documents: list[str]) -> None:
 def main() -> int:
     utf8_stdout()
     if not PAPERS_JSONL.exists():
-        print(f"ERROR: {PAPERS_JSONL} not found. Run fetch_arxiv.py first.", file=sys.stderr)
+        print(f"ERROR: {PAPERS_JSONL} not found. Run python -m scripts.fetch_arxiv first.", file=sys.stderr)
         return 1
     papers = load_papers()
     documents = [to_document(p) for p in papers]

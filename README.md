@@ -68,7 +68,7 @@ The application runs locally using Python, ChromaDB, and Streamlit.
 Create a virtual environment and install dependencies:
 
 ```powershell
-py -m venv .venv
+py -3.13 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
@@ -77,13 +77,15 @@ py -m venv .venv
 Download the research papers from arXiv:
 
 ```powershell
-.\.venv\Scripts\python.exe fetch_arxiv.py
+.\.venv\Scripts\python.exe -m scripts.fetch_arxiv
 ```
 
-Generate embeddings and store the papers in ChromaDB:
+On a fresh database, create the smoke-test collection used by the ingestion
+configuration comparison, then generate embeddings and store the papers:
 
 ```powershell
-.\.venv\Scripts\python.exe ingest.py
+.\.venv\Scripts\python.exe -m scripts.smoke_test
+.\.venv\Scripts\python.exe -m scripts.ingest
 ```
 
 The database is stored locally in `data/chroma/`.
@@ -122,6 +124,64 @@ The embedding model downloads automatically on first use. Once downloaded, it ru
 
 The current version does not use an LLM or RAG.
 
+### Repository Map
+
+Run the commands in this README from the repository root. The two application
+entry points remain there; shared modules and utilities are grouped below.
+Paths in `problem_solving_lab/lab_common.py` remain anchored to the repository
+root, not the package directory or the shell's working directory.
+
+| Files | Role |
+|---|---|
+| `app.py`, `cli.py` | Streamlit and interactive CLI entry points; both use the shared retrieval and Discovery Card modules. |
+| `problem_solving_lab/retrieval.py` | Opens the persistent `papers` collection, searches, adds notes, and reports counts. |
+| `problem_solving_lab/concepts.py`, `problem_solving_lab/card.py` | Extract candidate terms and build/render Discovery Cards from retrieval results. |
+| `problem_solving_lab/lab_common.py` | Shared data paths, collection configuration, embedding function, and text helpers. |
+| `concepts.py` | Compatibility alias for callers that still use `import concepts`. |
+| `scripts/fetch_arxiv.py`, `scripts/ingest.py` | Fetch/cache/deduplicate arXiv records, then embed and upsert them into ChromaDB. |
+| `scripts/preview_arxiv.py` | Standalone metadata preview; does not save records. |
+| `scripts/smoke_test.py` | Existing persistence/semantic-search check; writes sample notes to `smoke_test_notes` in the same database. |
+| `scripts/eval_queries.py`, `scripts/case_evidence.py` | Existing corpus evaluation and supporting-evidence scripts. |
+| `.streamlit/config.toml` | Local server settings and UI theme. |
+| `requirements.txt`, `.gitignore` | Pinned application dependencies and exclusions for local artifacts. |
+| `docs/PROJECT_NOTES.md`, `docs/prompt_log.md` | Historical Phase 1 planning notes and development prompts, preserved as written; see this README for current paths and commands. |
+| `tests/` | Reserved for manually transferred HW9 tests; currently contains only `.gitkeep`. |
+
+Data flows from arXiv through `fetch_arxiv.py` into `data/raw/arxiv/` (cached feeds)
+and `data/processed/arxiv_papers.jsonl` (deduplicated records). `ingest.py` reads
+those records and writes embeddings and metadata to `data/chroma/`. Both interfaces
+query that database through `retrieval.py`, then use `concepts.py` and `card.py`
+to present results. Added notes go directly into the same `papers` collection;
+CLI exports go into `cards/`. These generated directories are Git-ignored.
+
+**Existing setup dependency:** `ingest.py` currently reads the `smoke_test_notes`
+collection for a configuration comparison before ingesting papers. On a fresh
+database, run `python -m scripts.smoke_test` with the project environment first to create
+that collection. This script writes sample data; `--reset` deletes and rebuilds
+only that collection.
+
+### Utility Commands and Import Compatibility
+
+Utilities now run as modules from the repository root (instead of commands such
+as `python ingest.py` or `python scripts/ingest.py`):
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.preview_arxiv --help
+.\.venv\Scripts\python.exe -m scripts.fetch_arxiv --help
+.\.venv\Scripts\python.exe -m scripts.smoke_test --help
+.\.venv\Scripts\python.exe -m scripts.eval_queries
+.\.venv\Scripts\python.exe -m scripts.case_evidence
+```
+
+New Python code should import from `problem_solving_lab`, for example
+`from problem_solving_lab.concepts import candidate_terms`. The root `concepts.py`
+aliases the same module, including private helpers, so existing HW9 imports such
+as `import concepts` continue to work when the repository root is on `sys.path`.
+Other old core imports (`card`, `retrieval`, `lab_common`) must use the package
+prefix. When HW9 tests are transferred, run them from the repository root using
+`python -m pytest` in an environment with pytest installed. No HW9 tests or test
+dependencies are included yet.
+
 ## 7. Limitations and Future Work
 
 This is an early prototype with a relatively small research dataset.
@@ -136,4 +196,4 @@ I used ChatGPT for brainstorming and refining the project idea, Claude.ai for ad
 
 After completing the CLI, I also used Claude Code to develop a simple Streamlit interface.
 
-The main development prompts are documented separately in `prompt_log.md`.
+The main development prompts are documented separately in `docs/prompt_log.md`.

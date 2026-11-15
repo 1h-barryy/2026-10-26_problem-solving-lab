@@ -1,6 +1,6 @@
 """Build and render a Discovery Card from retrieval hits (no LLM; heuristics in concepts.py)."""
 
-from concepts import (STRONG_BELOW, WEAK_ABOVE, best_sentence, candidate_terms, category_name,
+from .concepts import (STRONG_BELOW, WEAK_ABOVE, best_sentence, candidate_terms, category_name,
                       match_label)
 
 TERM_POOL = 10   # terms come from the non-weak hits among the top 10

@@ -12,10 +12,10 @@ import chromadb
 import streamlit as st
 from chromadb.errors import NotFoundError
 
-import retrieval
-from card import SECTIONS, build_card, render_sections
-from concepts import document_frequencies
-from lab_common import DB_DIR, PAPERS_COLLECTION, embedding_function
+from problem_solving_lab import retrieval
+from problem_solving_lab.card import build_card, render_sections
+from problem_solving_lab.concepts import document_frequencies
+from problem_solving_lab.lab_common import DB_DIR, PAPERS_COLLECTION, embedding_function
 
 TOP_K = 15  # same as cli.py
 EXAMPLES = {
@@ -23,7 +23,6 @@ EXAMPLES = {
                                 "how could they behave more naturally as a group?",
     "Example B — distraction": "Every time a notification pops up I get distracted and it takes ages to focus again.",
 }
-HEADINGS = dict(SECTIONS)
 
 st.set_page_config(page_title="Problem-Solving Lab", page_icon="🔭", layout="centered")
 
@@ -96,8 +95,8 @@ if collection is None or collection.count() == 0:
     st.markdown('<h1 class="lab-title">Problem-Solving Lab</h1>', unsafe_allow_html=True)
     st.error(f"No research database found at `{DB_DIR}` (collection `{PAPERS_COLLECTION}`).")
     st.markdown("Build it once from the project folder, then restart this app:\n\n"
-                "```powershell\n.\\.venv\\Scripts\\python.exe fetch_arxiv.py\n"
-                ".\\.venv\\Scripts\\python.exe ingest.py\n```")
+                "```powershell\n.\\.venv\\Scripts\\python.exe -m scripts.fetch_arxiv\n"
+                ".\\.venv\\Scripts\\python.exe -m scripts.ingest\n```")
     st.stop()
 
 # ---- Sidebar: navigation + live database statistics -------------------------------------------

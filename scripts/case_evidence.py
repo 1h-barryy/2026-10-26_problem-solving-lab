@@ -5,16 +5,16 @@ primary category, the non-stopword tokens shared by query and document, and
 the abstract sentence closest to the query in embedding space.
 
 Usage:
-    python case_evidence.py
+    python -m scripts.case_evidence
 """
 
 import sys
 
-from card import _abstract
-from concepts import SENTENCE_SPLIT, match_label
-from eval_queries import QUERIES, content_tokens
-from lab_common import utf8_stdout
-import retrieval
+from problem_solving_lab.card import _abstract
+from problem_solving_lab.concepts import SENTENCE_SPLIT, match_label
+from scripts.eval_queries import QUERIES, content_tokens
+from problem_solving_lab.lab_common import utf8_stdout
+from problem_solving_lab import retrieval
 
 TOP_N = {"A": 5, "C": 3, "D": 3}
 

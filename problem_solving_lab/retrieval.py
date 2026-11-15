@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 
 import chromadb
 
-from lab_common import COLLECTION_CONFIG, DB_DIR, PAPERS_COLLECTION, clean, embedding_function
+from .lab_common import COLLECTION_CONFIG, DB_DIR, PAPERS_COLLECTION, clean, embedding_function
 
 
 def open_collection() -> chromadb.Collection:

@@ -7,8 +7,8 @@ collection already existed from a previous run (i.e. whether it persisted).
 These documents are throwaway test data, not the research corpus.
 
 Usage:
-    python smoke_test.py            # create/update and query
-    python smoke_test.py --reset    # delete the collection first, then rebuild
+    python -m scripts.smoke_test            # create/update and query
+    python -m scripts.smoke_test --reset    # delete the collection first, then rebuild
 """
 
 import argparse
@@ -17,7 +17,7 @@ from pathlib import Path
 import chromadb
 from chromadb.errors import NotFoundError
 
-DB_DIR = Path(__file__).resolve().parent / "data" / "chroma"
+DB_DIR = Path(__file__).resolve().parent.parent / "data" / "chroma"
 COLLECTION_NAME = "smoke_test_notes"
 
 # Stable, hand-assigned IDs: re-running upserts the same 12 records instead of
